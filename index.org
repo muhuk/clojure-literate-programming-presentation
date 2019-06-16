@@ -1,1 +1,302 @@
-* Literate Programming
+#+TITLE: Literate Programming
+#+SUBTITLE:  Singapore Clojure Meetup
+#+DATE: June 2019
+#+AUTHOR: Atamert Ölçgen
+#+EMAIL: muhuk@muhuk.com
+#+OPTIONS: email:t num:nil toc:nil todo:nil tex:t
+#+OPTIONS: reveal_history:t reveal_slide_number:nil reveal_width:"100%"
+#+STARTUP: indent content
+
+#+REVEAL_TITLE_SLIDE:
+#+REVEAL_THEME: moon
+#+REVEAL_MARGIN: 0.2
+#+REVEAL_TRANS: Fade
+#+REVEAL_PLUGINS: (highlight notes)
+#+REVEAL_EXTRA_CSS: media/fontawesome-free-5.9.0-web/css/all.min.css
+#+REVEAL_EXTRA_CSS: media/css/custom.css
+#+REVEAL_ROOT: media/reveal.js/
+#+REVEAL_MATHJAX_URL: media/MathJax/MathJax.js
+
+#+MACRO: empty @@html:&nbsp@@
+
+* {{{title}}}
+
+  Singapore Clojure Meetup
+
+  {{{date}}}
+
+* What is It?
+
+#+REVEAL: split
+
+#+BEGIN_QUOTE
+The practitioner of literate programming can be regarded as an essayist, whose
+main concern is with exposition and excellence of style.
+
+---Donald E. Knuth
+#+END_QUOTE
+
+#+REVEAL: split
+
+#+BEGIN_QUOTE
+Such an author, with thesaurus in hand, chooses the names of variables
+carefully and explains what each variable means.  He or she strives for a
+program that is comprehensible because its concepts have been introduced in an
+order that is best for human understanding, using a mixture of formal and
+informal methods that reinforce each other.
+
+---Donald E. Knuth
+#+END_QUOTE
+
+#+REVEAL: split
+
+#+BEGIN_QUOTE
+Such an author, with thesaurus in hand, _chooses the names of variables
+carefully and explains what each variable means_.  He or she strives for a
+program that is comprehensible because its concepts have been introduced in an
+order that is best for human understanding, using a mixture of formal and
+informal methods that reinforce each other.
+
+---Donald E. Knuth
+#+END_QUOTE
+
+#+REVEAL: split
+
+#+BEGIN_QUOTE
+Such an author, with thesaurus in hand, chooses the names of variables
+carefully and explains what each variable means.  He or she strives for _a
+program that is comprehensible because its concepts have been introduced in_ _an
+order that is best for human understanding_, using a mixture of formal and
+informal methods that reinforce each other.
+
+---Donald E. Knuth
+#+END_QUOTE
+
+** Ingredients
+
+- Programming language
+- Documentation formatting language
+- Toolchain
+
+** Ingredients
+
+- Programming language: *Pascal*
+- Documentation formatting language: *Tex*
+- Toolchain: *Web*
+
+** Ingredients
+
+- Programming language: *Clojure*
+- Documentation formatting language: *Markdown*
+- Toolchain: *Marginalia*
+
+** Ingredients
+
+- Programming language: *Any*
+- Documentation formatting language: *Org*
+- Toolchain: *Org Babel*
+
+** New Concepts
+
+#+ATTR_REVEAL: :frag t
+\begin{equation}
+\text{literate programming document} \xrightarrow{\text{tangle}} \text{source code}
+\end{equation}
+
+#+ATTR_REVEAL: :frag t
+\begin{equation}
+\text{literate programming document} \xrightarrow{\text{weave}} \text{documentation}
+\end{equation}
+
+* Benefits of Literate Programming
+
+** Benefits of Literate Programming
+
+- Definiteness of purpose
+- Audience
+- Great documentation
+
+* Case Study: Marginalia
+
+** Description
+
+#+BEGIN_QUOTE
+While the phrase /ultra-lightweight literate programming/ is used to describe
+Marginalia, it is in no way a tool for classical literate programming.  That
+is, Marginalia is a linear documentation generator allowing no out-of-order
+reassembly of source.
+
+--- Marginalia README
+#+END_QUOTE
+
+** Strengths & Weaknesses
+
+- Build narrative style documentation from docstrings & comments.
+  - Docstrings mechanism has improved a lot since the original paper..
+- ~lein marg~ and ~lein codox~ can co-exist.
+- No out-of-order listing of source is a deal breaker for literate
+  programming as a development method.
+
+** Weave Looks Like This
+
+  #+ATTR_REVEAL: :stretch
+ [[./media/img/marginalia.png]]
+
+ @@html:&nbsp;@@
+
+* Case Study: Org Babel
+
+** Shopping List
+
+- Emacs
+- Org Mode
+- Babel
+- org-babel-clojure
+
+** Org Syntax - Basics
+
+#+BEGIN_SRC org
+  ,** This is a heading
+
+  This is a normal paragraph.
+#+END_SRC
+
+** Org Syntax - Code
+
+#+BEGIN_SRC org
+  ,** Here is a code block:
+
+  ,#+BEGIN_SRC clojure
+  (defn add [a b]
+    (+ a b))
+  ,#+END_SRC
+#+END_SRC
+
+** Keyboard Driven Interface
+
+- ~C-RET~ adds a new heading.
+- ~M-RET~ adds a new list item.
+- ~M-LEFT~ promotes heading/list item.
+- ~M-RIGHT~ demotes heading/list item.
+
+** Focus & Productivity
+
+~< s TAB~ expands to:
+
+#+BEGIN_SRC org
+  ,#+BEGIN_SRC █
+
+  ,#+END_SRC
+#+END_SRC
+
+Cursor (█) where you are going to enter the language.
+
+#+ATTR_REVEAL: :frag appear
+~C-c '~ switches to a buffer that contains only the contents of the snippet.
+This buffer has all the right modes set, just as if you have opened and actual
+file in that language.  Then you can ~C-c '~ again to go back to your original
+document.
+
+** Tangling
+
+#+BEGIN_SRC org
+  ,#+BEGIN_SRC clojure :tangle src/core.clj :mkdirp yes :comments link
+
+  ,#+END_SRC
+#+END_SRC
+
+#+ATTR_REVEAL: :frag appear
+- ~:tangle~ specifies the filename this code block needs to be tangled in.
+- ~:mkdirp yes~ instructs tangle to create directories as necessary.
+- ~:comments link~ will surround tangled code with comments that refers back
+  to the original literate programming document.  This information can also be
+  used to jump to the source if you are debugging inside Emacs.
+
+** Out of Order Definitions
+
+This code block contains a reference to another code block:
+
+#+BEGIN_SRC org
+  ,#+BEGIN_SRC clojure :noweb yes
+    (divide [numerator denumerator]
+      <<assert_not_zero>>
+      (/ numerator denumerator))
+  ,#+END_SRC
+#+END_SRC
+
+#+ATTR_REVEAL: :frag appear :frag_idx 1
+#+BEGIN_SRC org
+  ,#+NAME: assert_not_zero
+  ,#+BEGIN_SRC clojure
+    (assert (not (zero? denumerator)))  ;; <- hard-coded
+  ,#+END_SRC
+#+END_SRC
+
+** Org-Babel Tips
+
+#+ATTR_REVEAL: :frag (appear)
+- In an org document you can mix and match languages if you are executing them
+  within org, not sure if similar thing can be done in babel. ~C-c C-c~ to
+  execute.
+- You can insert the /result/ of a code block instead of its contents (source).
+- While working with noweb references, ~C-c C-v C-v~ creates a (read-only)
+  buffer for the current code block with all the references expanded.  Good
+  for syntax checking.
+
+* Discussion Points
+
+** Comparison with TDD
+
+#+ATTR_REVEAL: :frag (appear)
+- Literate programming focuses on *explaining* the why and how.
+  - Good for experiments and teaching material.
+- TDD focuses on *specifying* the behavior
+  - Good for large scale software development.
+- Combination is possible and possibly tedious.
+
+** Are we trained to ignore comments?
+
+*** Eclipse
+:PROPERTIES:
+:reveal_background: ./media/img/Eclipse_4.2_Juno_screenshot.png
+:END:
+
+*** IntelliJ
+
+[[./media/img/screenshot_16807.png]]
+
+*** Visual Studio Code
+:PROPERTIES:
+:reveal_background: ./media/img/screenshot.png
+:END:
+
+*** Emacs
+:PROPERTIES:
+:reveal_background: ./media/img/emacs.png
+:END:
+* Thank You
+  @@html:<i class="fas fa-user-circle"></i>@@ {{{author}}}
+
+  @@html:<i class="fas fa-bullhorn"></i>@@ [[http://blog.muhuk.com][blog.muhuk.com]]
+
+  @@html:<i class="far fa-envelope"></i>@@ [[mailto:muhuk@muhuk.com][{{{email}}}]]
+
+  @@html:<i class="fab fa-twitter"></i>@@ [[https://twitter.com/muhuk][twitter.com/muhuk]]
+
+  @@html:<i class="fab fa-github"></i>@@ [[https://github.com/muhuk][github.com/muhuk]]
+
+* References
+  - Papers
+    - [[http://www.literateprogramming.com/knuthweb.pdf][Literate Programming by Donald E. Knuth]]
+  - Technologies mentioned:
+    - [[https://github.com/gdeer81/marginalia][Marginalia]]
+    - [[https://orgmode.org/worg/org-contrib/babel/][org-babel]]
+    - [[https://orgmode.org/worg/org-contrib/babel/languages/ob-doc-clojure.html][org-babel-clojure]]
+  - Technologies used:
+    - [[https://orgmode.org/][Emacs & Org]]
+    - [[https://github.com/hakimel/reveal.js][reveal.js]]
+    - [[https://fontawesome.com/start][Font Awesome]]
+  - Images:
+    - [[https://commons.wikimedia.org/wiki/File:Eclipse_4.2_Juno_screenshot.png][https://commons.wikimedia.org/wiki/File:Eclipse_4.2_Juno_screenshot.png ]]
+    - https://plugins.jetbrains.com/plugin/9568-go
+    - https://marketplace.visualstudio.com/items?itemName=alireza94.theme-gotham

@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Literate Programming</title>
+<meta name="author" content="Atamert Ölçgen"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="media/reveal.js/css/reveal.css"/>
+
+<link rel="stylesheet" href="media/reveal.js/css/theme/moon.css" id="theme"/>
+
+<link rel="stylesheet" href="media/fontawesome-free-5.9.0-web/css/all.min.css"/>
+
+<link rel="stylesheet" href="media/css/custom.css"/>
+<link rel="stylesheet" href="media/reveal.js/lib/css/zenburn.css"/>
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'media/reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+<script type="text/javascript" src="media/MathJax/MathJax.js"></script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<section>
+<section id="slide-orga691671">
+<h2 id="orga691671">Literate Programming</h2>
+<p>
+Singapore Clojure Meetup
+</p>
+
+<p>
+June 2019
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-orga7cadfa">
+<h2 id="orga7cadfa">What is It?</h2>
+</section>
+<section>
+
+<blockquote>
+<p>
+The practitioner of literate programming can be regarded as an essayist, whose
+main concern is with exposition and excellence of style.
+</p>
+
+<p>
+&#x2014;Donald E. Knuth
+</p>
+</blockquote>
+
+</section>
+<section>
+
+<blockquote>
+<p>
+Such an author, with thesaurus in hand, chooses the names of variables
+carefully and explains what each variable means.  He or she strives for a
+program that is comprehensible because its concepts have been introduced in an
+order that is best for human understanding, using a mixture of formal and
+informal methods that reinforce each other.
+</p>
+
+<p>
+&#x2014;Donald E. Knuth
+</p>
+</blockquote>
+
+</section>
+<section>
+
+<blockquote>
+<p>
+Such an author, with thesaurus in hand, <span class="underline">chooses the names of variables
+carefully and explains what each variable means</span>.  He or she strives for a
+program that is comprehensible because its concepts have been introduced in an
+order that is best for human understanding, using a mixture of formal and
+informal methods that reinforce each other.
+</p>
+
+<p>
+&#x2014;Donald E. Knuth
+</p>
+</blockquote>
+
+</section>
+<section>
+
+<blockquote>
+<p>
+Such an author, with thesaurus in hand, chooses the names of variables
+carefully and explains what each variable means.  He or she strives for <span class="underline">a
+program that is comprehensible because its concepts have been introduced in</span> <span class="underline">an
+order that is best for human understanding</span>, using a mixture of formal and
+informal methods that reinforce each other.
+</p>
+
+<p>
+&#x2014;Donald E. Knuth
+</p>
+</blockquote>
+
+</section>
+<section id="slide-org90b964c">
+<h3 id="org90b964c">Ingredients</h3>
+<ul>
+<li>Programming language</li>
+<li>Documentation formatting language</li>
+<li>Toolchain</li>
+
+</ul>
+
+</section>
+<section id="slide-org6f969f8">
+<h3 id="org6f969f8">Ingredients</h3>
+<ul>
+<li>Programming language: <b>Pascal</b></li>
+<li>Documentation formatting language: <b>Tex</b></li>
+<li>Toolchain: <b>Web</b></li>
+
+</ul>
+
+</section>
+<section id="slide-org483da69">
+<h3 id="org483da69">Ingredients</h3>
+<ul>
+<li>Programming language: <b>Clojure</b></li>
+<li>Documentation formatting language: <b>Markdown</b></li>
+<li>Toolchain: <b>Marginalia</b></li>
+
+</ul>
+
+</section>
+<section id="slide-orged6fa3f">
+<h3 id="orged6fa3f">Ingredients</h3>
+<ul>
+<li>Programming language: <b>Any</b></li>
+<li>Documentation formatting language: <b>Org</b></li>
+<li>Toolchain: <b>Org Babel</b></li>
+
+</ul>
+
+</section>
+<section id="slide-org02955de">
+<h3 id="org02955de">New Concepts</h3>
+<div class="fragment">
+\begin{equation}
+\text{literate programming document} \xrightarrow{\text{tangle}} \text{source code}
+\end{equation}
+
+</div>
+
+<div class="fragment">
+\begin{equation}
+\text{literate programming document} \xrightarrow{\text{weave}} \text{documentation}
+\end{equation}
+
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-org016eece">
+<h2 id="org016eece">Benefits of Literate Programming</h2>
+<div class="outline-text-2" id="text-org016eece">
+</div>
+</section>
+<section id="slide-orgea66f20">
+<h3 id="orgea66f20">Benefits of Literate Programming</h3>
+<ul>
+<li>Definiteness of purpose</li>
+<li>Audience</li>
+<li>Great documentation</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-org4e08fb5">
+<h2 id="org4e08fb5">Case Study: Marginalia</h2>
+<div class="outline-text-2" id="text-org4e08fb5">
+</div>
+</section>
+<section id="slide-org03b0d5b">
+<h3 id="org03b0d5b">Description</h3>
+<blockquote>
+<p>
+While the phrase <i>ultra-lightweight literate programming</i> is used to describe
+Marginalia, it is in no way a tool for classical literate programming.  That
+is, Marginalia is a linear documentation generator allowing no out-of-order
+reassembly of source.
+</p>
+
+<p>
+&#x2014; Marginalia README
+</p>
+</blockquote>
+
+</section>
+<section id="slide-orgea0a964">
+<h3 id="orgea0a964">Strengths &amp; Weaknesses</h3>
+<ul>
+<li>Build narrative style documentation from docstrings &amp; comments.
+<ul>
+<li>Docstrings mechanism has improved a lot since the original paper..</li>
+
+</ul></li>
+<li><code>lein marg</code> and <code>lein codox</code> can co-exist.</li>
+<li>No out-of-order listing of source is a deal breaker for literate
+programming as a development method.</li>
+
+</ul>
+
+</section>
+<section id="slide-orgd49d056">
+<h3 id="orgd49d056">Weave Looks Like This</h3>
+
+<div class="figure">
+<p><img src="./media/img/marginalia.png" alt="marginalia.png" />
+</p>
+</div>
+
+<p>
+&nbsp;
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-orgf972380">
+<h2 id="orgf972380">Case Study: Org Babel</h2>
+<div class="outline-text-2" id="text-orgf972380">
+</div>
+</section>
+<section id="slide-org3e4410b">
+<h3 id="org3e4410b">Shopping List</h3>
+<ul>
+<li>Emacs</li>
+<li>Org Mode</li>
+<li>Babel</li>
+<li>org-babel-clojure</li>
+
+</ul>
+
+</section>
+<section id="slide-org6fed5e6">
+<h3 id="org6fed5e6">Org Syntax - Basics</h3>
+<div class="org-src-container">
+
+<pre><code class=" org" >** This is a heading
+
+This is a normal paragraph.
+</code></pre>
+</div>
+
+</section>
+<section id="slide-org7d34d59">
+<h3 id="org7d34d59">Org Syntax - Code</h3>
+<div class="org-src-container">
+
+<pre><code class=" org" >** Here is a code block:
+
+#+BEGIN_SRC clojure
+(defn add [a b]
+  (+ a b))
+#+END_SRC
+</code></pre>
+</div>
+
+</section>
+<section id="slide-org4f3d1a6">
+<h3 id="org4f3d1a6">Keyboard Driven Interface</h3>
+<ul>
+<li><code>C-RET</code> adds a new heading.</li>
+<li><code>M-RET</code> adds a new list item.</li>
+<li><code>M-LEFT</code> promotes heading/list item.</li>
+<li><code>M-RIGHT</code> demotes heading/list item.</li>
+
+</ul>
+
+</section>
+<section id="slide-orgec91020">
+<h3 id="orgec91020">Focus &amp; Productivity</h3>
+<p>
+<code>&lt; s TAB</code> expands to:
+</p>
+
+<div class="org-src-container">
+
+<pre><code class=" org" >#+BEGIN_SRC █
+
+#+END_SRC
+</code></pre>
+</div>
+
+<p>
+Cursor (█) where you are going to enter the language.
+</p>
+
+<p class="fragment appear">
+<code>C-c '</code> switches to a buffer that contains only the contents of the snippet.
+This buffer has all the right modes set, just as if you have opened and actual
+file in that language.  Then you can <code>C-c '</code> again to go back to your original
+document.
+</p>
+
+</section>
+<section id="slide-orgc1aa627">
+<h3 id="orgc1aa627">Tangling</h3>
+<div class="org-src-container">
+
+<pre><code class=" org" >#+BEGIN_SRC clojure :tangle src/core.clj :mkdirp yes :comments link
+
+#+END_SRC
+</code></pre>
+</div>
+
+<ul class="fragment appear">
+<li><code>:tangle</code> specifies the filename this code block needs to be tangled in.</li>
+<li><code>:mkdirp yes</code> instructs tangle to create directories as necessary.</li>
+<li><code>:comments link</code> will surround tangled code with comments that refers back
+to the original literate programming document.  This information can also be
+used to jump to the source if you are debugging inside Emacs.</li>
+
+</ul>
+
+</section>
+<section id="slide-orgedda954">
+<h3 id="orgedda954">Out of Order Definitions</h3>
+<p>
+This code block contains a reference to another code block:
+</p>
+
+<div class="org-src-container">
+
+<pre><code class=" org" >#+BEGIN_SRC clojure :noweb yes
+  (divide [numerator denumerator]
+    &lt;&lt;assert_not_zero&gt;&gt;
+    (/ numerator denumerator))
+#+END_SRC
+</code></pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="fragment appear" data-fragment-index="1"><code class=" org" >#+NAME: assert_not_zero
+#+BEGIN_SRC clojure
+  (assert (not (zero? denumerator)))  ;; &lt;- hard-coded
+#+END_SRC
+</code></pre>
+</div>
+
+</section>
+<section id="slide-org1f7ce34">
+<h3 id="org1f7ce34">Org-Babel Tips</h3>
+<ul>
+<li class="fragment appear">In an org document you can mix and match languages if you are executing them
+within org, not sure if similar thing can be done in babel. <code>C-c C-c</code> to
+execute.</li>
+<li class="fragment appear">You can insert the <i>result</i> of a code block instead of its contents (source).</li>
+<li class="fragment appear">While working with noweb references, <code>C-c C-v C-v</code> creates a (read-only)
+buffer for the current code block with all the references expanded.  Good
+for syntax checking.</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orgd7093e2">
+<h2 id="orgd7093e2">Discussion Points</h2>
+<div class="outline-text-2" id="text-orgd7093e2">
+</div>
+</section>
+<section id="slide-orgb7244c1">
+<h3 id="orgb7244c1">Comparison with TDD</h3>
+<ul>
+<li class="fragment appear">Literate programming focuses on <b>explaining</b> the why and how.
+<ul>
+<li>Good for experiments and teaching material.</li>
+
+</ul></li>
+<li class="fragment appear">TDD focuses on <b>specifying</b> the behavior
+<ul>
+<li>Good for large scale software development.</li>
+
+</ul></li>
+<li class="fragment appear">Combination is possible and possibly tedious.</li>
+
+</ul>
+
+</section>
+<section id="slide-orgc4618b8">
+<h3 id="orgc4618b8">Are we trained to ignore comments?</h3>
+<div class="outline-text-3" id="text-orgc4618b8">
+</div>
+</section>
+<section id="slide-org1b981ce" data-background="./media/img/Eclipse_4.2_Juno_screenshot.png">
+<h4 id="org1b981ce">Eclipse</h4>
+
+</section>
+<section id="slide-orgbe2fb43">
+<h4 id="orgbe2fb43">IntelliJ</h4>
+
+<div class="figure">
+<p><img src="./media/img/screenshot_16807.png" alt="screenshot_16807.png" />
+</p>
+</div>
+
+</section>
+<section id="slide-orgdd2d871" data-background="./media/img/screenshot.png">
+<h4 id="orgdd2d871">Visual Studio Code</h4>
+
+</section>
+<section id="slide-org121a556" data-background="./media/img/emacs.png">
+<h4 id="org121a556">Emacs</h4>
+</section>
+</section>
+<section>
+<section id="slide-org3e71f80">
+<h2 id="org3e71f80">Thank You</h2>
+<p>
+<i class="fas fa-user-circle"></i> Atamert Ölçgen
+</p>
+
+<p>
+<i class="fas fa-bullhorn"></i> <a href="http://blog.muhuk.com">blog.muhuk.com</a>
+</p>
+
+<p>
+<i class="far fa-envelope"></i> <a href="mailto:muhuk@muhuk.com">muhuk@muhuk.com</a>
+</p>
+
+<p>
+<i class="fab fa-twitter"></i> <a href="https://twitter.com/muhuk">twitter.com/muhuk</a>
+</p>
+
+<p>
+<i class="fab fa-github"></i> <a href="https://github.com/muhuk">github.com/muhuk</a>
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-org07c1476">
+<h2 id="org07c1476">References</h2>
+<ul>
+<li>Papers
+<ul>
+<li><a href="http://www.literateprogramming.com/knuthweb.pdf">Literate Programming by Donald E. Knuth</a></li>
+
+</ul></li>
+<li>Technologies mentioned:
+<ul>
+<li><a href="https://github.com/gdeer81/marginalia">Marginalia</a></li>
+<li><a href="https://orgmode.org/worg/org-contrib/babel/">org-babel</a></li>
+<li><a href="https://orgmode.org/worg/org-contrib/babel/languages/ob-doc-clojure.html">org-babel-clojure</a></li>
+
+</ul></li>
+<li>Technologies used:
+<ul>
+<li><a href="https://orgmode.org/">Emacs &amp; Org</a></li>
+<li><a href="https://github.com/hakimel/reveal.js">reveal.js</a></li>
+<li><a href="https://fontawesome.com/start">Font Awesome</a></li>
+
+</ul></li>
+<li>Images:
+<ul>
+<li><a href="https://commons.wikimedia.org/wiki/File:Eclipse_4.2_Juno_screenshot.png">https://commons.wikimedia.org/wiki/File:Eclipse<sub>4.2</sub><sub>Juno</sub><sub>screenshot.png</sub> </a></li>
+<li><a href="https://plugins.jetbrains.com/plugin/9568-go">https://plugins.jetbrains.com/plugin/9568-go</a></li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=alireza94.theme-gotham">https://marketplace.visualstudio.com/items?itemName=alireza94.theme-gotham</a></li>
+
+</ul></li>
+
+</ul>
+</section>
+</section>
+</div>
+</div>
+<script src="media/reveal.js/lib/js/head.min.js"></script>
+<script src="media/reveal.js/js/reveal.js"></script>
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: true,
+center: true,
+slideNumber: false,
+rollingLinks: false,
+keyboard: true,
+mouseWheel: false,
+fragmentInURL: false,
+hashOneBasedIndex: false,
+pdfSeparateFragments: true,
+
+overview: true,
+width: "100%",
+margin: 0.20,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'Fade', // see README of reveal.js for options
+transitionSpeed: 'default',
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: 'media/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+ { src: 'media/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+
+});
+</script>
+</body>
+</html>
